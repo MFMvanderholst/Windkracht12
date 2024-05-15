@@ -1,0 +1,73 @@
+// @use '../../helper/border';
+
+// @use '../../config/layout-config' as layout;
+
+@use '../../utils/function/conf';
+@use '../../utils/function/spacer';
+@use '../../utils/class/border';
+
+// # ul, ol > li
+ul,
+ol {
+  padding-left: spacer.get(3);
+  margin: spacer.get(2) 0;
+  list-style-position: outside;
+
+  li {
+    padding-left: spacer.get(1);
+    margin: spacer.get(1) 0;
+
+    &::marker {
+      margin-left: spacer.get(2);
+      font-weight: bold;
+    }
+  }
+
+  &[role='nav'] {
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin: 0;
+    }
+  }
+}
+
+[role='list'],
+[role='nav'] {
+  list-style: none;
+
+  ul,
+  ol {
+    list-style: none;
+  }
+}
+
+// # dl
+// # dt
+// # dd
+dl {
+  @extend .border-thin;
+  display: grid;
+  padding: 0;
+  margin: spacer.get(1) 0;
+  grid-template-columns: 1fr;
+
+  @media (min-width: conf.get('layout.breakpoint.s')) {
+    grid-template-columns: repeat(3, 1fr);
+
+    dt {
+      text-align: right;
+    }
+  }
+
+  dt,
+  dd {
+    padding: spacer.get(1);
+    margin: 0;
+  }
+
+  dd {
+    grid-column: span 2;
+  }
+}

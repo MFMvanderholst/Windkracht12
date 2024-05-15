@@ -1,0 +1,90 @@
+@use 'sass:math';
+
+@use '../utils/function/conf';
+@use '../utils/function/spacer';
+@use '../utils/function/list';
+
+// Base flex styling
+.flex,
+.row,
+.col,
+[class^='col-'],
+[class*=' col-'] {
+  position: relative;
+  display: flex;
+}
+
+// Row class styling
+.row {
+  flex-wrap: wrap;
+
+  > * {
+    flex-shrink: 0;
+  }
+}
+
+// Base column styling.
+[class^='col-'],
+[class*=' col-'],
+.col {
+  padding: math.div(conf.get('layout.grid.gutter'), 2);
+  flex-direction: column;
+}
+
+// Make the column classes use the appointed width.
+[class^='col-'],
+[class*=' col-'] {
+  flex: 0 0 auto;
+}
+
+.col-0 {
+  width: fit-content;
+  flex-shrink: 1;
+}
+// Make base column class fill the available width of the row.
+.col {
+  flex-grow: 1;
+}
+// Declaring col-width-map variable. Used for column width values.
+$column-widths: ();
+
+// For-loop for generating base column classes.
+// Default column number is 12, found in config/_size.scss
+// Width is added to col-width-map to be used.
+@for $i from 1 through conf.get('layout.grid.columns') {
+  // Column width is calculated
+  $column-width: math.div(100%, math.div(conf.get('layout.grid.columns'), $i));
+  // Column width is prepended to column-width list
+  $column-widths: list.prepend($column-widths, $column-width);
+
+  // Base column width class is set.
+
+  .col-#{$i} {
+    width: $column-width;
+  }
+}
+
+// Foreach-loop for generating media-queries based on screensizes.
+// Screensizes are found in config/_size.scss
+// Prefixes are: s, m, l, xl and xxl by default.
+// Screenwidths are: 576, 768, 992, 1200, 1400
+@each $prefix, $size in conf.get('layout.breakpoint') {
+  @media (min-width: $size) {
+    // Media-query based on screenwidth.
+    .col-#{$prefix}-0 {
+      width: fit-content;
+      flex-shrink: 1;
+    }
+
+    // For-loop for generating column classes for screensizes.
+    // Example: col-s-6 or col-xl-8
+    @for $i from 1 through conf.get('layout.grid.columns') {
+      .col-#{$prefix}-#{$i} {
+        width: nth(
+          $column-widths,
+          conf.get('layout.grid.columns') - $i + 1
+        ); // Column width class for screensize is set.
+      }
+    }
+  }
+}

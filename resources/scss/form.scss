@@ -1,0 +1,63 @@
+// button styling in form component 
+.home {
+    position: absolute;
+    background-color: #fff;
+    width: 6rem;
+    height: 3rem;
+    border-radius: 0;
+    border: solid 0;
+    top: 1rem;
+    left: 1rem;
+}
+
+// styling in form component and reservation.create 
+.form {
+    background-color: #CAE1F1;
+    position: relative;
+    bottom: 11rem;
+    padding: 20px;
+    height: 43em;
+    width: 48%;
+    border-radius: 10px;
+    margin-top: 2rem;
+
+    .form-content {
+        height: 40rem;
+        width: 50rem;
+
+        .form-container {
+
+            .error {
+                color: red;
+            }
+
+            .succes {
+                color: green;
+            }
+
+            .input {
+                width: 17.42rem;
+            }
+
+            h2 {
+                border-bottom: solid 1px;
+                display: flex;
+                width: 35rem;
+                justify-content: center;
+            }
+
+            input {
+                width: 35rem;
+            } 
+
+            button {
+                width: 15rem;
+                height: 3rem;
+                border: solid 3px #618FCA;
+                border-radius: 0;
+                font-size: 55px;
+            }
+        }
+    }
+}
+

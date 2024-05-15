@@ -1,0 +1,65 @@
+@use 'sass:math';
+
+@use '../function/conf';
+
+// @mixin theme-vars.generate
+// @description Generates CSS variables based on a theme color map
+// @param $map: map
+// @param $alternate: map|bool
+@mixin generate($map, $alternate: false) {
+  // Loop through a color map.
+  @each $key, $value in $map {
+    // Standard variables are generated.
+    // Alpha variables are generated for every color.
+    // Example: --background: #ecf0f1;
+    // Example: --background-20: rgba(236, 240, 241, 0.2);
+    @if type-of($value) == 'color' or type-of($value) == 'string' {
+      --#{$key}: #{$value};
+      @include generateAlphaVariables($key, $value);
+
+      // Alternate variables are generated from the other theme.
+      // Alpha generated generated for every alternate color.
+      // Example: --background-alt: #181818;
+      // Example: --background-alt-40: rgba(24, 24, 24, 0.4);
+      @if $alternate and map-has-key($alternate, $key) {
+        --#{$key}-alt: #{map-get($alternate, $key)};
+        @include generateAlphaVariables('#{$key}-alt', map-get($alternate, $key));
+      }
+    } @else if type-of($value) == 'list' {
+      // If the value is a list, the key+iterator is used for the name.
+      // Alpha variables are generated for every color.
+      // Example: --accent-5: #da6d2d;
+      // Example: --accent-5-80: rgba(253, 152, 7, 0.8);
+      @for $i from 1 through length($value) {
+        --#{$key}-#{$i}: #{nth($value, $i)};
+        @include generateAlphaVariables('#{$key}-#{$i}', nth($value, $i));
+      }
+    } @else if type-of($value) == 'map' {
+      // If the value is a map, the key+subkey are used for the name.
+      // Alpha variables are generated for every color.
+      // Example: --alert-info: #00aeff;
+      // Example: --alert-info-60: rgba(0, 174, 255, 0.6);
+      @each $subKey, $subValue in $value {
+        --#{$key}-#{$subKey}: #{$subValue};
+        @include generateAlphaVariables('#{$key}-#{$subKey}', $subValue);
+        // @debug '--#{$key}-#{$subKey}: #{$subValue}';
+      }
+    } @else {
+      @debug 'No valid value for :#{key}, should be of type: color, string, list or map';
+    }
+  }
+}
+
+@mixin generateAlphaVariables($key, $color, $min: 0, $max: conf.get('theme.alpha-amount')) {
+  @for $a from $min through $max - 1 {
+    $perc: math.div(100, $max) * $a;
+
+    @if ($perc == 0) {
+      $perc: '00';
+    }
+
+    $alpha: 1 - (math.div(1, $max) * $a);
+
+    --#{$key}-#{$perc}: #{transparentize($color, $alpha)};
+  }
+}

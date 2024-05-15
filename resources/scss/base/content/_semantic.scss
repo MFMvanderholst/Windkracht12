@@ -1,0 +1,41 @@
+@use '../../utils/function/spacer';
+@use '../../utils/class/border';
+
+// # address
+address {
+  @extend .border-thin;
+  display: inline-block;
+  width: fit-content;
+  padding: spacer.get(1);
+  margin: spacer.get(2) 0;
+  font-size: 1.1em;
+
+  & + * {
+    margin-left: spacer.get(2);
+  }
+}
+
+// # details
+// # summary
+details {
+  @extend .border-thin;
+  padding: 0 !important;
+  margin: spacer.get(2) 0;
+  // summary, p { padding: spacer.get(1) spacer.get(2); }
+
+  summary {
+    padding: spacer.get(1) spacer.get(2) spacer.get(1) spacer.get(1);
+    cursor: pointer;
+  }
+
+  p {
+    @extend .border-t-thin;
+    padding: spacer.get(1) spacer.get(2);
+    margin: 0;
+  }
+}
+
+// # cite
+cite {
+  font-size: 1.1em;
+}

@@ -1,0 +1,28 @@
+@use "../utils/function/conf";
+
+@use "../utils/mixin/theme-vars";
+
+html {
+  @if conf.get("theme.font") {
+    --font-base: #{conf.get("theme.font.base")};
+    --font-title: #{conf.get("theme.font.title")};
+  }
+}
+
+@if conf.get("theme.dark") {
+  html[data-theme="dark"] {
+    @include theme-vars.generate(
+      conf.get("theme.dark"),
+      conf.get("theme.light")
+    );
+  }
+}
+
+html,
+html[data-theme="light"] {
+  @include theme-vars.generate(
+    conf.get("theme.light"),
+    conf.get("theme.dark")
+  );
+}
+

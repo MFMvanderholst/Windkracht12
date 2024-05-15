@@ -1,0 +1,27 @@
+@use '../../utils/function/spacer';
+
+// # table
+table {
+  width: 100%;
+  margin: spacer.get(2) 0;
+  border-collapse: collapse;
+  overflow: hidden;
+
+  caption {
+    padding: spacer.get(1);
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+
+  tfoot th {
+    font-size: 0.8em;
+    font-weight: normal;
+  }
+
+  tr {
+    td,
+    th {
+      padding: spacer.get(1);
+    }
+  }
+}

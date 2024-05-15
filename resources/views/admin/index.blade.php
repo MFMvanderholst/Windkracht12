@@ -1,0 +1,19 @@
+<x-app-layout>
+    <table>
+        <tr>
+            <h5>Overzicht Klanten en Reservaties</h5>
+        </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+</x-app-layout>

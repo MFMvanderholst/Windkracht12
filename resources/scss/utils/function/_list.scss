@@ -1,0 +1,44 @@
+// @function list.first
+// @description Returns first element of list.
+// @param $list: list
+// @return mixed
+@function first($list) {
+  @return nth($list, 1);
+}
+
+// @function list.last
+// @description Returns last element of list.
+// @param $list: list
+// @return mixed
+@function last($list) {
+  @return nth($list, length($list));
+}
+
+// @function list.prepend
+// @description Adds value at the end of a list.
+// @param $list: list
+// @param $value: mixed
+// @return mixed
+@function prepend($list, $value) {
+  @return join($value, $list);
+}
+
+// @function list.remove
+// @description Removes value from list.
+// @param $list: list
+// @param $value: mixed
+// @param $recursive: bool
+// @return list
+@function remove($list, $value, $recursive: false) {
+  $result: ();
+
+  @for $i from 1 through length($list) {
+    @if type-of(nth($list, $i)) == list and $recursive {
+      $result: append($result, remove(nth($list, $i), $value, $recursive));
+    } @else if nth($list, $i) != $value {
+      $result: append($result, nth($list, $i));
+    }
+  }
+
+  @return $result;
+}

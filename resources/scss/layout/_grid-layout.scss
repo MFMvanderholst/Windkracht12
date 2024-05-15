@@ -1,0 +1,132 @@
+@use 'sass:math';
+
+@use '../utils/function/conf';
+
+.grid-layout {
+  display: grid;
+  grid-auto-flow: row dense;
+  grid-template-columns: [banner-start] 0 [breakout-start] 1rem [content-start] auto [content-end] 1rem [breakout-end] 0 [banner-end];
+  grid-template-rows: auto;
+  gap: conf.get('layout.grid.gutter') 0;
+
+  @each $prefix, $size in conf.get('layout.breakpoint') {
+    // Media query based on screensize
+    @media (min-width: $size) {
+      // container-width variable is defined.
+      // 95% of the screenwidth is rounded to tens.
+      $container-width: math.round(math.div(($size * 0.95), 10)) * 10;
+
+      // Width of the container is set.
+
+      grid-template-columns: [banner-start] auto [breakout-start] 3% [content-start] $container-width [content-end] 3% [breakout-end] auto [banner-end];
+    }
+  }
+
+  &:not(.banner):not(.breakout) > * {
+    grid-column: content;
+  }
+
+  .content {
+    grid-column: content !important;
+  }
+
+  .breakout {
+    grid-column: breakout !important;
+  }
+
+  .banner {
+    grid-column: banner !important;
+  }
+}
+
+.grid-layout section:not(.banner),
+.grid-layout .flow {
+  @extend .grid-layout;
+
+  &:not(.content):not(.breakout) {
+    grid-column: banner;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+
+  &.small-gap {
+    gap: 0.5rem;
+  }
+  &.medium-gap {
+    gap: 1rem;
+  }
+  &.large-gap {
+    gap: 2rem;
+  }
+
+  // [class^='cell-'],
+  // [class*=' cell-'] {
+  //   padding: 0.5rem;
+  // }
+
+  @for $i from 1 through conf.get('layout.grid.columns') {
+    &.gt-cols-#{$i} {
+      grid-template-columns: repeat($i, 1fr);
+    }
+    &.gt-rows-#{$i} {
+      grid-template-rows: repeat($i, 1fr);
+    }
+
+    .cell-cspan-#{$i} {
+      grid-column: auto / span $i;
+    }
+    .cell-cstart-#{$i} {
+      grid-column-start: $i;
+    }
+    .cell-cend-#{$i} {
+      grid-column-end: $i;
+    }
+
+    .cell-rspan-#{$i} {
+      grid-row: auto / span $i;
+    }
+    .cell-rstart-#{$i} {
+      grid-row-start: $i;
+    }
+    .cell-rend-#{$i} {
+      grid-row-end: $i;
+    }
+  }
+
+  @each $prefix, $size in conf.get('layout.breakpoint') {
+    @media (min-width: $size) {
+      @for $i from 1 through conf.get('layout.grid.columns') {
+        &.gt-#{$prefix}-cols-#{$i} {
+          grid-template-columns: repeat($i, 1fr);
+        }
+        &.gt-#{$prefix}-rows-#{$i} {
+          grid-template-rows: repeat($i, 1fr);
+        }
+
+        .cell-#{$prefix}-cspan-#{$i} {
+          grid-column: auto / span $i;
+        }
+        .cell-#{$prefix}-cstart-#{$i} {
+          grid-column-start: $i;
+        }
+        .cell-#{$prefix}-cend-#{$i} {
+          grid-column-end: $i;
+        }
+
+        .cell-#{$prefix}-rspan-#{$i} {
+          grid-row: auto / span $i;
+        }
+        .cell-#{$prefix}-rstart-#{$i} {
+          grid-row-start: $i;
+        }
+        .cell-#{$prefix}-rend-#{$i} {
+          grid-row-end: $i;
+        }
+      }
+    }
+  }
+}

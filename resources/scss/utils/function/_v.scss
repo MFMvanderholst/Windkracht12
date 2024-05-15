@@ -1,0 +1,55 @@
+@use 'sass:list';
+// @use 'sass:string';
+
+@use 'string';
+
+// @function v.g
+// @description This function returns var string. v = variable, g = get.
+// This is because v.g('bg') is shorter than var(--background). That's the only reason.
+// @param $identifier: string
+// @return string
+@function g($identifier) {
+  // @debug string.explode($identifier, '-');
+  $identityList: string.explode($identifier, '-');
+  $vName: '--';
+
+  @if (nth($identityList, 1) == 'font') {
+    @return var(--#{$identifier});
+  }
+
+  @if (length($identityList) > 0) {
+    $firstKey: nth($identityList, 1);
+
+    @if ($firstKey == 'bg') {
+      $vName: $vName + 'background';
+    } @else if ($firstKey == 'txt') {
+      $vName: $vName + 'text';
+    } @else if ($firstKey == 'bor') {
+      $vName: $vName + 'border';
+    } @else if ($firstKey == 'a') {
+      $vName: $vName + 'accent';
+    } @else {
+      $vName: $vName + $firstKey;
+    }
+  }
+  @if (length($identityList) > 1) {
+    $secondKey: nth($identityList, 2);
+
+    @if ($secondKey == 'a') {
+      $vName: $vName + '-alt';
+    } @else if (string.toNumber($secondKey)) {
+      $vName: $vName + '-#{$secondKey}';
+    } @else {
+      $vName: $vName + '-#{$secondKey}';
+    }
+  }
+  @if (length($identityList) > 2) {
+    $thirdKey: nth($identityList, 3);
+
+    @if (string.toNumber($thirdKey)) {
+      $vName: $vName + '-#{$thirdKey}';
+    }
+  }
+
+  @return var(#{$vName});
+}

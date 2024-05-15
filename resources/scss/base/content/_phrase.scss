@@ -1,0 +1,54 @@
+@use '../../utils/function/conf';
+@use '../../utils/function/spacer';
+@use '../../utils/class/border';
+
+@use '../../extend/pseudo';
+
+// # abbr
+abbr {
+  @extend %pseudo;
+  font-style: italic;
+  text-decoration: none;
+  cursor: help;
+
+  &::after {
+    width: 0.2em;
+    height: 0.2em;
+    border-radius: 0.1em;
+    background-color: black;
+  }
+}
+
+// # dfn
+
+// # code
+// # kdb
+// # samp
+code,
+kbd,
+samp {
+  line-height: 2em;
+  padding: spacer.get(1);
+  margin: 0 spacer.get(1);
+}
+
+// # kdb
+kbd {
+  @extend %pseudo;
+  position: relative;
+
+  &:before {
+    @extend .border-thin;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0.05rem 0.2rem 0rem 0.05rem #000;
+    z-index: conf.get('layout.level.background');
+  }
+}
+
+// # pre
+pre {
+  padding: spacer.get(1);
+}

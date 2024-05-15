@@ -1,0 +1,72 @@
+@use '../function/conf';
+@use '../function/v';
+@use '../mixin/border';
+
+// Thin borders
+.border-thin {
+  @include border.bySide(conf.get('border.width.thin'));
+}
+.border-x-thin {
+  @include border.bySide(conf.get('border.width.thin'), 'x');
+}
+.border-y-thin {
+  @include border.bySide(conf.get('border.width.thin'), 'y');
+}
+.border-t-thin {
+  @include border.bySide(conf.get('border.width.thin'), 't');
+}
+.border-r-thin {
+  @include border.bySide(conf.get('border.width.thin'), 'r');
+}
+.border-b-thin {
+  @include border.bySide(conf.get('border.width.thin'), 'b');
+}
+.border-l-thin {
+  @include border.bySide(conf.get('border.width.thin'), 'l');
+}
+
+// Medium borders
+.border-medium {
+  @include border.bySide(conf.get('border.width.medium'));
+}
+.border-x-medium {
+  @include border.bySide(conf.get('border.width.medium'), 'x');
+}
+.border-y-medium {
+  @include border.bySide(conf.get('border.width.medium'), 'y');
+}
+.border-t-medium {
+  @include border.bySide(conf.get('border.width.medium'), 't');
+}
+.border-r-medium {
+  @include border.bySide(conf.get('border.width.medium'), 'r');
+}
+.border-b-medium {
+  @include border.bySide(conf.get('border.width.medium'), 'b');
+}
+.border-l-medium {
+  @include border.bySide(conf.get('border.width.medium'), 'l');
+}
+
+// Thick borders
+.border-thick {
+  @include border.bySide(conf.get('border.width.thick'));
+}
+.border-x-thick {
+  @include border.bySide(conf.get('border.width.thick'), 'x');
+}
+.border-y-thick {
+  @include border.bySide(conf.get('border.width.thick'), 'y');
+}
+.border-t-thick {
+  @include border.bySide(conf.get('border.width.thick'), 't');
+}
+.border-r-thick {
+  @include border.bySide(conf.get('border.width.thick'), 'r');
+}
+.border-b-thick {
+  @include border.bySide(conf.get('border.width.thick'), 'b');
+}
+.border-l-thick {
+  @include border.bySide(conf.get('border.width.thick'), 'l');
+}

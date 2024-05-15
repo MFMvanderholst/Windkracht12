@@ -1,0 +1,7 @@
+%pseudo {
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+  }
+}

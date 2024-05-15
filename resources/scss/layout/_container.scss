@@ -1,0 +1,29 @@
+@use 'sass:math';
+
+@use '../utils/function/conf';
+
+// Standard container class size.
+// Breakpoints from map are used.
+.container {
+  width: 100%;
+  margin: 0 auto;
+
+  // Looping through screensizes found in config/_layout
+  // Default: s [576px], m [768px], l [992px], xl [1200px], xxl [1400px]
+  @each $prefix, $size in conf.get('layout.breakpoint') {
+    // Media query based on screensize
+    @media (min-width: $size) {
+      // container-width variable is defined.
+      // 95% of the screenwidth is rounded to tens.
+      $container-width: math.round(math.div(($size * 0.95), 10)) * 10;
+
+      // Width of the container is set.
+      width: $container-width;
+    }
+  }
+}
+
+// Standard container-fluid
+.container-fluid {
+  width: 100%;
+}

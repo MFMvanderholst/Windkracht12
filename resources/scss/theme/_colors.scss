@@ -1,0 +1,104 @@
+@use '../utils/function/conf';
+@use '../utils/function/v';
+
+.standard-colors {
+  background-color: v.g('bg');
+  color: v.g('txt');
+}
+.alt-colors {
+  background-color: v.g('bg-a');
+  color: v.g('txt-a');
+}
+
+$colorProperties: (
+  'bg': background-color,
+  'text': color,
+  'border': border-color
+);
+$colorPropVars: (
+  'bg': (
+    'key': 'background',
+    'prop': background-color
+  ),
+  'txt': (
+    'key': 'text',
+    'prop': color
+  ),
+  'bor': (
+    'key': 'border',
+    'prop': border-color
+  )
+);
+$colorCategories: 'base', 'accent';
+
+// Mixin alphaColorClass
+// Adds alpha extension classes.
+// Example: background-base-20 or txt-a-3-40
+@mixin alphaColorClass($key, $prop) {
+  @for $i from 0 through conf.get('theme.alpha-amount') - 1 {
+    $perc: '00';
+
+    @if ($i > 0) {
+      $perc: 20 * $i;
+    }
+
+    &-#{$perc} {
+      #{$prop}: v.g('#{$key}-#{$perc}');
+    }
+  }
+}
+
+// Loop through the colorPropVars map.
+@each $shortKey, $property in $colorPropVars {
+  // Start of propclasses.
+  // Examples: bg, background
+  $shortPropClass: #{$shortKey};
+  $longPropClass: #{map-get($property, 'key')};
+
+  $prop: map-get($property, 'prop');
+
+  @each $type in $colorCategories {
+    // Extending the propclasses.
+    // Examples: txt-a, text-accent
+    $shortTypeClass: '#{$shortPropClass}-#{str-slice($type, 0, 1)}';
+    $longTypeClass: '#{$longPropClass}-#{$type}';
+
+    // If type is base
+    // Base and base-alt color classes are generated.
+    // This is also the spot actual styling is generated.
+    // All classes will get alpha classes.
+    // Examples: bg-b, background-base-alt, txt-b-a-20, border-base-40
+    @if $type == 'base' {
+      .#{$shortTypeClass},
+      .#{$longTypeClass} {
+        #{$prop}: v.g($shortKey);
+
+        @include alphaColorClass($shortKey, $prop);
+      }
+      .#{$shortTypeClass}-a,
+      .#{$longTypeClass}-alt {
+        #{$prop}: v.g($shortKey + '-a');
+
+        @include alphaColorClass($shortKey + '-a', $prop);
+      }
+    }
+
+    // If type is accent
+    // Accent classes are generated.
+    // All classes will get alpha classes.
+    // Examples: bg-a-1, text-accent-2-20, bor-a-4-60
+    @if $type == 'accent' {
+      @for $i from 1 through 5 {
+        $shortAccentClass: '#{$shortTypeClass}-#{$i}';
+        $longAccentClass: '#{$longTypeClass}-#{$i}';
+
+        .#{$shortAccentClass},
+        .#{$longAccentClass} {
+          #{$prop}: v.g('a-#{$i}');
+
+          @include alphaColorClass('a-#{$i}', $prop);
+        }
+      }
+    }
+  }
+}

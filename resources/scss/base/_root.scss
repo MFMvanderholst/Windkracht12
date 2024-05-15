@@ -1,0 +1,48 @@
+@use '../utils/function/conf';
+@use '../utils/function/v';
+@use '../utils/function/font';
+@use '../utils/mixin/breakpoint';
+
+html {
+  @include breakpoint.byProperty(font-size, conf.get('font.size'));
+  scroll-behavior: smooth;
+
+  @media (prefers-reduced-motion: reduce) {
+    scroll-behavior: auto;
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+html,
+body {
+  // width: 100%;
+  margin: 0;
+}
+
+html {
+  height: auto;
+}
+
+body {
+  height: 100%;
+  background: v.g('bg');
+  text-rendering: optimizeSpeed;
+  line-height: conf.get('font.line-height');
+  font-family: font.base();
+  color: v.g('txt');
+  // overflow-x: hidden;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}

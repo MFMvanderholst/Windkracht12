@@ -1,0 +1,53 @@
+@use '../../utils/function/conf';
+@use '../../utils/function/spacer';
+@use '../../utils/class/border';
+
+img,
+picture {
+  display: block;
+  margin: spacer.get(1) 0;
+  object-fit: cover;
+
+  &.rounded {
+    border-radius: conf.get('border.radius.normal');
+    overflow: hidden;
+  }
+  &.round {
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+  }
+}
+
+figure {
+  @extend .border-thin;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 0.3rem;
+  overflow: hidden;
+
+  img,
+  picture {
+    margin: 0;
+  }
+
+  figcaption {
+    padding: spacer.get(1);
+    font-style: italic;
+  }
+}
+
+audio,
+video {
+  margin: spacer.get(2) 0;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: #ddd;
+}
+
+iframe,
+embed,
+object {
+  width: 100%;
+  margin: spacer.get(1) 0;
+}

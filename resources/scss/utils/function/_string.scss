@@ -1,0 +1,81 @@
+@use 'sass:math';
+
+// @function string.explode
+// @description Translates a string to a list with a delimiter.
+// @param $string: string
+// @param $delimiter: string
+// @return list
+@function explode($string, $delimiter: '') {
+  @if type-of($string) != 'string' {
+    @error 'Function string.explode: The argument $string: `#{$string}` is not a string.';
+  } @else if type-of($delimiter) != 'string' {
+    @error 'Function string.explode: The argument $delimiter: `#{$delimiter}` is not a string.';
+  }
+
+  $result: ();
+  $running: true;
+
+  @if str-length($delimiter) == 0 {
+    @for $i from 1 through str-length($string) {
+      $result: append($result, str-slice($string, $i, $i));
+    }
+
+    @return $result;
+  }
+
+  @while $running {
+    $index: str-index($string, $delimiter);
+
+    @if $index != null {
+      $item: str-slice($string, 1, ($index - 1));
+      $result: append($result, $item);
+      $string: str-slice($string, ($index + str-length($delimiter)));
+    } @else {
+      $running: false;
+    }
+  }
+
+  @return append($result, $string);
+}
+
+@function toNumber($string) {
+  // @debug $string;
+  $numMap: (
+    '0': 0,
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9
+  );
+
+  $strList: explode($string);
+  $len: length($strList);
+  $decIndex: index($strList, '.');
+  $pow: $len - 1;
+
+  @if ($decIndex) {
+    $pow: $pow - ($len - $decIndex) - 1;
+  }
+
+  $result: 0;
+
+  @for $l from 1 through length($strList) {
+    $c: nth($strList, $l);
+    $n: map-get($numMap, $c);
+
+    @if ($c != '.' and $n != null) {
+      $result: $result + ($n * math.pow(10, $pow));
+
+      $pow: $pow - 1;
+    } @else if ($n == null) {
+      @return false;
+    }
+  }
+
+  @return $result;
+}

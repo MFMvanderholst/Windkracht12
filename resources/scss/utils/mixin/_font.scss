@@ -1,0 +1,19 @@
+@mixin setFontFaces($fonts) {
+  @each $family, $faces in $fonts {
+    @each $type, $name in $faces {
+      $italic: str-index($type, '-italic');
+
+      @font-face {
+        font-family: $family;
+        src: url(/fonts/#{$family}-#{$name}.ttf) format('truetype');
+
+        @if $italic {
+          font-style: italic;
+          font-weight: unquote(str-slice($type, 0, $italic - 1));
+        } @else {
+          font-weight: unquote($type);
+        }
+      }
+    }
+  }
+}

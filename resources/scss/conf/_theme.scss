@@ -1,0 +1,34 @@
+$theme: (
+  "font": (
+    "title": (
+      "Oswald",
+      sans-serif,
+    ),
+    "base": (
+      "Open Sans",
+      sans-serif,
+    ),
+  ),
+  "alpha-amount": 10,
+  "dark": (
+    "background": #181818,
+    "text": #ecf0f1,
+    "border": #ecf0f1,
+    "accent": (
+      #345473,
+      #9cbec8,
+      #34735f,
+      #736134,
+      #735334,
+    ),
+  ),
+  "light": (
+    "background": #F2F2F2,
+    "text": #111,
+    "border": #111,
+    "accent": (
+      #1847B8,
+      #E5E5E5,
+    ),
+  ),
+);

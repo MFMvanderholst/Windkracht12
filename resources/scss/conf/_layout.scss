@@ -1,0 +1,25 @@
+$layout: (
+  'breakpoint': (
+    's': 576px,
+    'm': 768px,
+    'l': 992px,
+    'xl': 1200px,
+    'xxl': 1400px
+  ),
+  'grid': (
+    'columns': 12,
+    'gutter': 1rem
+  ),
+  'spacer': (
+    'size': 0.5rem,
+    'amount': 10
+  ),
+  'level': (
+    'background': -1,
+    'main': 0,
+    'content': 1,
+    'menu': 2,
+    'overlay': 3,
+    'lightbox': 4
+  )
+);

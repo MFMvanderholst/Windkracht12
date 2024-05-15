@@ -1,0 +1,18 @@
+@use 'conf';
+@use 'v';
+
+@function title() {
+  @if conf.get('theme.font.title') {
+    @return v.g('font-title');
+  } @else {
+    @return conf.get('font.family.title');
+  }
+}
+
+@function base() {
+  @if conf.get('theme.font.base') {
+    @return v.g('font-base');
+  } @else {
+    @return conf.get('font.family.base');
+  }
+}

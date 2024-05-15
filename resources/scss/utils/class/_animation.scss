@@ -1,0 +1,201 @@
+/*
+ * Anim class
+ * Can be used for animating elements.
+ * Current sub classes: 
+ * - on-scroll, on-view
+ * - top-range, center-range, bottom-range
+ * - count-1, count-2, count-3, infinite
+ * - dur-03s, dur-05s, dur-1s, dur-2s, dur-3s
+ * - fade-in, fade-out
+ * - big-zoom-in, zoom-in, zoom-out
+ * - slide-in-left, slide-in-right, slide-out-left, slide-out-right 
+ */
+
+.anim {
+  animation-timing-function: ease-in;
+
+  /*
+   * Animation timeline
+   */
+  &.on-scroll,
+  &.on-view {
+    animation-fill-mode: forwards;
+  }
+  &.on-scroll {
+    animation-timeline: scroll();
+  }
+  &.on-view {
+    animation-timeline: view();
+  }
+
+  /*
+   * Animation ranges
+   */
+  &.top-range {
+    animation-range-start: 0%;
+    animation-range-end: 60%;
+  }
+  &.center-range {
+    animation-range-start: 30%;
+    animation-range-end: 70%;
+  }
+  &.bottom-range {
+    animation-range-start: 40%;
+    animation-range-end: 100%;
+  }
+
+  /*
+   * Animation iterations
+   */
+  &.count-1 {
+    animation-iteration-count: 1;
+  }
+  &.count-2 {
+    animation-iteration-count: 2;
+  }
+  &.count-3 {
+    animation-iteration-count: 3;
+  }
+  &.infinite {
+    animation-iteration-count: infinite;
+  }
+
+  /*
+   * Animation durations
+   */
+  &.dur-03s {
+    animation-duration: 0.3s;
+  }
+  &.dur-05s {
+    animation-duration: 0.5s;
+  }
+  &.dur-1s {
+    animation-duration: 1s;
+  }
+  &.dur-2s {
+    animation-duration: 2s;
+  }
+  &.dur-3s {
+    animation-duration: 3s;
+  }
+
+  /*
+   * Fade animations
+   */
+  // Fade in animation
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+  &.fade-in {
+    opacity: 0;
+    animation-name: fade-in;
+  }
+
+  // Fade out animation
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+  &.fade-out {
+    opacity: 1;
+    animation-name: fade-out;
+  }
+
+  /*
+   * Zoom animations
+   */
+  // Big zoom in animation
+  @keyframes big-zoom-in {
+    50% {
+      scale: 0.8;
+    }
+    75% {
+      scale: 1;
+    }
+    100% {
+      scale: 0.5;
+    }
+  }
+  &.big-zoom-in {
+    scale: 0.5;
+    animation-name: big-zoom-in;
+  }
+
+  // Zoom in animation
+  @keyframes zoom-in {
+    to {
+      scale: 1;
+    }
+  }
+  &.zoom-in {
+    scale: 0.5;
+    animation-name: zoom-in;
+  }
+
+  // Zoom out animation
+  @keyframes zoom-out {
+    to {
+      scale: 2;
+    }
+  }
+  &.zoom-out {
+    scale: 1;
+    animation-name: zoom-out;
+  }
+
+  /*
+   * Slide animations
+   */
+  // Slide in left animation
+  @keyframes slide-in-left {
+    to {
+      translate: 0 0;
+    }
+  }
+  &.slide-in-left {
+    translate: -200vw 0;
+    animation-name: slide-in-left;
+  }
+
+  // Slide in right animation
+  @keyframes slide-in-right {
+    80% {
+      translate: 0 0;
+    }
+    100% {
+      translate: 0 0;
+    }
+  }
+  &.slide-in-right {
+    translate: 100vw 0;
+    animation-name: slide-in-right;
+  }
+
+  // Slide out left animation
+  @keyframes slide-out-left {
+    from {
+      translate: 0 0;
+    }
+    to {
+      translate: -200vw 0;
+    }
+  }
+  &.slide-out-left {
+    translate: 0 0;
+    animation-name: slide-out-left;
+  }
+
+  // Slide out right animation
+  @keyframes slide-out-right {
+    to {
+      translate: 200vw 0;
+    }
+  }
+  &.slide-out-right {
+    translate: 0 0;
+    animation-name: slide-out-right;
+  }
+}

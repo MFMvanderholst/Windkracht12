@@ -1,0 +1,164 @@
+@use '../../utils/function/conf';
+@use '../../utils/function/spacer';
+@use '../../utils/function/font';
+
+@use '../../utils/class/border';
+
+// # headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  padding: 0.1em 0 0.3em 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  line-height: conf.get('font.heading.line-height');
+  font-family: font.title();
+
+  @if conf.get('font.family.subtitle') {
+    &.sub {
+      font-family: conf.get('font.family.subtitle');
+    }
+  }
+}
+
+h1 {
+  font-size: conf.get('font.heading.h1');
+}
+h2 {
+  font-size: conf.get('font.heading.h2');
+}
+h3 {
+  font-size: conf.get('font.heading.h3');
+}
+h4 {
+  font-size: conf.get('font.heading.h4');
+}
+h5 {
+  font-size: conf.get('font.heading.h5');
+}
+h6 {
+  font-size: conf.get('font.heading.h6');
+}
+
+// # paragraph
+p {
+  margin: 0 0 spacer.get(1) 0;
+
+  &:first-child {
+    margin-top: spacer.get(1);
+  }
+}
+
+// # span
+// TODO add message state classes
+
+// # strong
+
+// # em
+
+// # mark
+mark {
+  padding: 0 0.3em;
+}
+
+// # ins
+// # u
+// # del
+// # s
+ins,
+u,
+del,
+s {
+  position: relative;
+  padding: 0 0.1em;
+  text-decoration: none;
+
+  &::before {
+    @extend .border-t-thin;
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+  }
+}
+
+a,
+ins,
+u {
+  &::before {
+    top: calc(100% - 0.2em);
+  }
+}
+
+del,
+s {
+  &::before {
+    top: 50%;
+  }
+}
+
+// # small
+
+// # blockquote
+blockquote {
+  position: relative;
+  width: fit-content;
+  padding: spacer.get(1);
+  margin: spacer.get(3) auto;
+  text-align: center;
+  font-family: conf.get('font.family.title');
+  font-size: 2em;
+  line-height: 1em;
+
+  &::before,
+  &::after {
+    @extend .border-x-thick;
+    content: '';
+    position: absolute;
+    left: 0;
+    width: calc(100% - 8px);
+    height: 0.5em;
+  }
+
+  &::before {
+    @extend .border-t-thick;
+    top: 0;
+  }
+
+  &::after {
+    @extend .border-b-thick;
+    bottom: 0;
+  }
+
+  > * {
+    display: inline-block;
+    margin: spacer.get(1) 0;
+  }
+}
+
+// # q
+q {
+  font-weight: bold;
+
+  &::before,
+  &::after {
+    opacity: 0.7;
+  }
+
+  &::before {
+    margin-right: 0.2em;
+  }
+  &::after {
+    margin-left: 0.2em;
+  }
+}
+
+// # sup
+// # sub
+sup,
+sub {
+  padding: 0.1em;
+}

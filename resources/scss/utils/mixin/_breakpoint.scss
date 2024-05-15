@@ -1,0 +1,46 @@
+@use '../function/conf';
+@use '../function/map';
+@use '../function/list';
+
+// @function breakpoint.byProperty
+// @description Generate breakpoints for properties.
+// @param $property: string|property
+// @map $values: map|list
+// @set Property values within media queries.
+@mixin byProperty($property, $values) {
+  // Check if $value argument is of type map or list.
+  // If so first value of map/list is set a base property value.
+  @if type-of($values) == 'map' {
+    #{$property}: map.first($values);
+
+    // Map is translates to list.
+    $values: map-values($values);
+  } @else if type-of($values) == 'list' {
+    #{$property}: list.first($values);
+  } @else {
+    @error 'Mixin breakpoint.byProperty: The argument $values, should be a map or a list type.';
+  }
+
+  // Iterator used in loop.
+  $i: 1;
+
+  // Loop through layout.breakpoint list.
+  // Generate media query by breakpoint.
+  @each $name, $size in conf.get('layout.breakpoint') {
+    @media screen and (min-width: $size) {
+      $value: '';
+
+      // Check if iterator is lower that the length of values list.
+      @if $i <= length($values) {
+        $value: nth($values, $i);
+        $i: $i + 1;
+      } @else {
+        // If list is shorter than the amount of breakpoints, last list value is used.
+        $value: nth($values, $i - 1);
+      }
+
+      // Property value is set for breakpoint.
+      #{$property}: $value;
+    }
+  }
+}

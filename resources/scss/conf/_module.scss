@@ -1,0 +1,13 @@
+$module: (
+  'navbar': (
+    'breakpoint': 'm',
+    'x-position': 'right',
+    // Options: left, right, false
+    'animation-side': 'side',
+    // Options: top, side
+    'size': 'auto',
+    // Options: full, auto
+    'text-align': 'center',
+    //Options: left, center, right
+  )
+);

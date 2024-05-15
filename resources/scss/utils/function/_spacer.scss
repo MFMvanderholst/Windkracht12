@@ -1,0 +1,5 @@
+@use 'conf';
+
+@function get($increment: 1) {
+  @return conf.get('layout.spacer.size') * $increment;
+}

@@ -1,0 +1,32 @@
+@use 'string';
+@use 'map';
+@use 'list';
+
+@use '../../conf/main' as conf;
+
+// @function conf.get
+// @description Returns the config value by a selector.
+// @param $selector: bool|string, keys should be seperated by a '.' to work
+// @return mixed
+@function get($selector: false) {
+  // If no selector is given the whole config map is returned.
+  @if $selector == false {
+    @return conf.$conf;
+  }
+
+  // If the selector is not a string an error is thrown.
+  @if type-of($selector) != 'string' {
+    @error 'Function conf.get: The argument $selector: `#{$selector}` is not a string.';
+  }
+
+  // Get a list of config map keys.
+  $keys: string.explode($selector, '.');
+
+  // Check if there is a value with the selector. Return the selected value if true.
+  @if map.check(conf.$conf, $keys) {
+    @return map.get(conf.$conf, $keys);
+  } @else {
+    // @error 'Function conf.get: No value with the selector: `#{$selector}`.';
+    @return false;
+  }
+}

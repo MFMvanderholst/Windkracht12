@@ -1,0 +1,17 @@
+@use 'border';
+@use 'font';
+@use 'layout';
+@use 'module';
+@use 'state';
+@use 'theme';
+@use 'message';
+
+$conf: (
+  'border': border.$border,
+  'font': font.$font,
+  'layout': layout.$layout,
+  'module': module.$module,
+  'state ': state.$state,
+  'theme': theme.$theme,
+  'message': message.$message
+);
